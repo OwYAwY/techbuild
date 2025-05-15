@@ -1,19 +1,20 @@
 <script lang="ts" setup>
-import { ref } from 'vue'
 import { registrationDataStore } from '../stores/registrationDataStore'
-import { reactive } from 'vue'
-const store = registrationDataStore()
-// const storeConfirm = store.confirm
+import { useRouter } from 'vue-router'
 
-// function dataSubmit() {
-//   store.validate()
-//   console.log(store.errors)
-// }
+const router = useRouter()
+const store = registrationDataStore()
+const submitForm = () => {
+  store.confirm()
+  if (store.isAuthenticated) {
+    router.push('/welcome')
+  }
+}
 </script>
 
 <template>
   <div class="registrationBlock">
-    <form @submit.prevent="store.confirm">
+    <form @submit.prevent="submitForm">
       <h1 class="registrationHeader">Регистрация</h1>
       <div class="inputBlock">
         <h2>Логин</h2>

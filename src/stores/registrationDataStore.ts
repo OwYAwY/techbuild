@@ -15,6 +15,7 @@ interface RegistrationDataStore {
   password: string
   repeatPassword: string
   errors: Errors
+  isAuthenticated: boolean
 }
 
 type FieldKey = 'login' | 'email' | 'phone' | 'password' | 'repeatPassword'
@@ -33,17 +34,9 @@ export const registrationDataStore = defineStore('registration', {
       password: '',
       repeatPassword: '',
     },
+    isAuthenticated: false,
   }),
   actions: {
-    // confirm() {
-    //   console.log('Подтверждённые данные:', {
-    //     login: this.login,
-    //     email: this.email,
-    //     phone: this.phone,
-    //     password: this.password,
-    //     repeatPassword: this.repeatPassword,
-    //   })
-    // },
     validate() {
       const fields: FieldKey[] = ['login', 'email', 'phone', 'password', 'repeatPassword']
 
@@ -103,10 +96,29 @@ export const registrationDataStore = defineStore('registration', {
     confirm() {
       this.validate()
       const hasErrors = Object.values(this.errors).some((errorMsg) => errorMsg !== '')
-      if (hasErrors) {
-        console.log('Есть ошибки')
-      } else {
-        console.log('Успешная регистрация')
+      if (!hasErrors) {
+        const userData = {
+          login: this.login,
+          email: this.email,
+          phone: this.phone,
+          password: this.password,
+          isAuthenticated: true,
+        }
+        localStorage.setItem('registeredUser', JSON.stringify(userData))
+        this.isAuthenticated = true
+        console.log('Успешно!')
+      }
+    },
+    loadFromLocalStorage() {
+      const savedData = localStorage.getItem('registeredUser')
+      if (savedData) {
+        const userData = JSON.parse(savedData)
+        this.login = userData.login || ''
+        this.email = userData.email || ''
+        this.phone = userData.phone || ''
+        this.password = userData.password || ''
+        this.repeatPassword = userData.password || ''
+        this.isAuthenticated = userData.isAuthenticated || false
       }
     },
   },
