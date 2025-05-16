@@ -60,6 +60,8 @@ export const registrationDataStore = defineStore('registration', {
               } else {
                 this.errors[field] = ''
               }
+            } else {
+              this.errors[field] = ''
             }
             break
           case 'phone':
@@ -69,6 +71,8 @@ export const registrationDataStore = defineStore('registration', {
               } else {
                 this.errors[field] = ''
               }
+            } else {
+              this.errors[field] = ''
             }
             break
           case 'password':

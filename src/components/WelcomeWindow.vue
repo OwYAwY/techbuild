@@ -10,8 +10,11 @@ const logout = () => {
 }
 </script>
 <template>
-  <form @submit.prevent="logout">
-    <h1 class="welcomeHeader">{{ `Здравствуйте, ${store.login}` }}</h1>
-    <button type="submit">Выход</button>
-  </form>
+  <div class="welcome-container">
+    <form @submit.prevent="logout">
+      <h1 class="welcomeHeader">{{ `Здравствуйте, ${store.login}` }}</h1>
+      <div class="divider"></div>
+      <div class="logout-text" @click="logout" role="button" tabindex="0">Выход</div>
+    </form>
+  </div>
 </template>
