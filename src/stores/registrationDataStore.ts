@@ -89,7 +89,7 @@ export const registrationDataStore = defineStore('registration', {
             if (!value) {
               this.errors[field] = 'Обязательное поле'
             } else if (value !== this.password) {
-              this.errors[field] = 'Пароли не совпадают!'
+              this.errors[field] = 'Пароли не совпадают'
             } else {
               this.errors[field] = ''
             }

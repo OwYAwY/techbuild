@@ -136,7 +136,7 @@ const togglePasswordVisibility = () => {
           :class="{
             'error-border-only': store.errors.password === 'Обязательное поле',
             'error-full':
-              (store.errors.password || store.errors.repeatPassword === 'Пароли не совпадают!') &&
+              (store.errors.password || store.errors.repeatPassword === 'Пароли не совпадают') &&
               store.errors.password !== 'Обязательное поле',
           }"
         />
