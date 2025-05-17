@@ -5,4 +5,3 @@ declare module '*.vue' {
   export default component
 }
 declare module 'vue-the-mask'
-declare module 'vue-password'

@@ -47,19 +47,25 @@ export const registrationDataStore = defineStore('registration', {
           case 'login':
             if (!value) {
               this.errors[field] = 'Обязательное поле'
-            } else if (!/^[a-zA-Z0-9]{6,}$/.test(value)) {
-              this.errors[field] = 'Логин должен содержать минимум 6 символов из латиницы и цифр'
+            } else if (value.length < 6) {
+              this.errors[field] = 'Логин должен содержать минимум 6 символов'
+            } else if (!/^[a-zA-Z0-9]+$/.test(value)) {
+              this.errors[field] = 'Логин может содержать только латинские буквы и цифры'
             } else {
               this.errors[field] = ''
             }
             break
           case 'email':
-            if (value) {
-              if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
-                this.errors[field] = 'Некорректный формат e-mail'
-              } else {
-                this.errors[field] = ''
-              }
+            if (!value) {
+              this.errors[field] = ''
+            } else if (/[а-яА-ЯЁё]/.test(value)) {
+              this.errors[field] = 'E-mail может содержать только латиницу и специальные символы'
+            } else if (!/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{1,}$/.test(value)) {
+              this.errors[field] = 'Некорректный формат (пример: user@example.com)'
+            } else if (
+              !/\.(ru|com|net|org|gov|edu|io|co|uk|de|fr|it|es|ua|kz|by|tj|am|az|ge)$/i.test(value)
+            ) {
+              this.errors[field] = 'Email должен содержать допустимый домен (например: .ru, .com)'
             } else {
               this.errors[field] = ''
             }
@@ -110,7 +116,6 @@ export const registrationDataStore = defineStore('registration', {
         }
         localStorage.setItem('registeredUser', JSON.stringify(userData))
         this.isAuthenticated = true
-        console.log('Успешно!')
       }
     },
     loadFromLocalStorage() {
