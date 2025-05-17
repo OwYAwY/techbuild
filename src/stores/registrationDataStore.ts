@@ -18,7 +18,7 @@ interface RegistrationDataStore {
   isAuthenticated: boolean
 }
 
-type FieldKey = 'login' | 'email' | 'phone' | 'password' | 'repeatPassword'
+type FieldKey = keyof Omit<RegistrationDataStore, 'errors' | 'isAuthenticated'>
 
 export const registrationDataStore = defineStore('registration', {
   state: (): RegistrationDataStore => ({
@@ -37,77 +37,75 @@ export const registrationDataStore = defineStore('registration', {
     isAuthenticated: false,
   }),
   actions: {
-    validate() {
+    validate(): void {
       const fields: FieldKey[] = ['login', 'email', 'phone', 'password', 'repeatPassword']
 
-      fields.forEach((field) => {
-        const value = (this[field] as string).trim()
+      fields.forEach((field: FieldKey) => {
+        const value = this[field].trim()
 
         switch (field) {
           case 'login':
-            if (!value) {
-              this.errors[field] = 'Обязательное поле'
-            } else if (value.length < 6) {
-              this.errors[field] = 'Логин должен содержать минимум 6 символов'
-            } else if (!/^[a-zA-Z0-9]+$/.test(value)) {
-              this.errors[field] = 'Логин может содержать только латинские буквы и цифры'
-            } else {
-              this.errors[field] = ''
-            }
+            this.errors.login = this.validateLogin(value)
             break
           case 'email':
-            if (!value) {
-              this.errors[field] = ''
-            } else if (/[а-яА-ЯЁё]/.test(value)) {
-              this.errors[field] = 'E-mail может содержать только латиницу и специальные символы'
-            } else if (!/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{1,}$/.test(value)) {
-              this.errors[field] = 'Некорректный формат (пример: user@example.com)'
-            } else if (
-              !/\.(ru|com|net|org|gov|edu|io|co|uk|de|fr|it|es|ua|kz|by|tj|am|az|ge)$/i.test(value)
-            ) {
-              this.errors[field] = 'Email должен содержать допустимый домен (например: .ru, .com)'
-            } else {
-              this.errors[field] = ''
-            }
+            this.errors.email = this.validateEmail(value)
             break
           case 'phone':
-            if (value) {
-              if (!/^\+7 \(\d{3}\) \d{3}-\d{2}-\d{2}$/.test(value)) {
-                this.errors[field] = 'Телефон должен быть в формате +7 (999) 999-99-99'
-              } else {
-                this.errors[field] = ''
-              }
-            } else {
-              this.errors[field] = ''
-            }
+            this.errors.phone = this.validatePhone(value)
             break
           case 'password':
-            if (!value) {
-              this.errors[field] = 'Обязательное поле'
-            } else if (value.length < 6) {
-              this.errors[field] = 'Пароль должен быть не менее 6 символов'
-            } else {
-              this.errors[field] = ''
-            }
+            this.errors.password = this.validatePassword(value)
             break
-
           case 'repeatPassword':
-            if (!value) {
-              this.errors[field] = 'Обязательное поле'
-            } else if (value !== this.password) {
-              this.errors[field] = 'Пароли не совпадают'
-            } else {
-              this.errors[field] = ''
-            }
+            this.errors.repeatPassword = this.validateRepeatPassword(value)
             break
         }
       })
     },
-    confirm() {
+
+    validateLogin(value: string): string {
+      if (!value) return 'Обязательное поле'
+      if (value.length < 6) return 'Логин должен содержать минимум 6 символов'
+      if (!/^[a-zA-Z0-9]+$/.test(value))
+        return 'Логин может содержать только латинские буквы и цифры'
+      return ''
+    },
+
+    validateEmail(value: string): string {
+      if (!value) return ''
+      if (/[а-яА-ЯЁё]/.test(value))
+        return 'E-mail может содержать только латиницу и специальные символы'
+      if (!/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{1,}$/.test(value))
+        return 'Некорректный формат (пример: user@example.com)'
+      if (!/\.(ru|com|net|org|gov|edu|io|co|uk|de|fr|it|es|ua|kz|by|tj|am|az|ge)$/i.test(value))
+        return 'Email должен содержать допустимый домен (например: .ru, .com)'
+      return ''
+    },
+
+    validatePhone(value: string): string {
+      if (value && !/^\+7 \(\d{3}\) \d{3}-\d{2}-\d{2}$/.test(value))
+        return 'Телефон должен быть в формате +7 (999) 999-99-99'
+      return ''
+    },
+
+    validatePassword(value: string): string {
+      if (!value) return 'Обязательное поле'
+      if (value.length < 6) return 'Пароль должен быть не менее 6 символов'
+      return ''
+    },
+
+    validateRepeatPassword(value: string): string {
+      if (!value) return 'Обязательное поле'
+      if (value !== this.password) return 'Пароли не совпадают'
+      return ''
+    },
+
+    confirm(): void {
       this.validate()
-      const hasErrors = Object.values(this.errors).some((errorMsg) => errorMsg !== '')
+      const hasErrors = Object.values(this.errors).some((error) => error !== '')
+
       if (!hasErrors) {
-        const userData = {
+        const userData: Omit<RegistrationDataStore, 'errors' | 'repeatPassword'> = {
           login: this.login,
           email: this.email,
           phone: this.phone,
@@ -118,10 +116,12 @@ export const registrationDataStore = defineStore('registration', {
         this.isAuthenticated = true
       }
     },
-    loadFromLocalStorage() {
+
+    loadFromLocalStorage(): void {
       const savedData = localStorage.getItem('registeredUser')
       if (savedData) {
-        const userData = JSON.parse(savedData)
+        const userData: Omit<RegistrationDataStore, 'errors'> & { isAuthenticated?: boolean } =
+          JSON.parse(savedData)
         this.login = userData.login || ''
         this.email = userData.email || ''
         this.phone = userData.phone || ''
@@ -131,5 +131,4 @@ export const registrationDataStore = defineStore('registration', {
       }
     },
   },
-  getters: {},
 })

@@ -2,21 +2,24 @@
 import { registrationDataStore } from '../stores/registrationDataStore'
 import { useRouter } from 'vue-router'
 import { ref } from 'vue'
-const router = useRouter()
+import type { Router } from 'vue-router'
+const router: Router = useRouter()
 const store = registrationDataStore()
-const isPasswordVisible = ref(false)
-const isRepeatPasswordVisible = ref(false)
-const submitForm = () => {
+const isPasswordVisible = ref<boolean>(false)
+const isRepeatPasswordVisible = ref<boolean>(false)
+const submitForm = (): void => {
   store.confirm()
   if (store.isAuthenticated) {
-    router.push('/welcome')
+    router.push('/welcome').catch((error: Error) => {
+      console.error('Ошибка перехода на другую страницу:', error)
+    })
   }
 }
 
-const toggleRepeatPasswordVisibility = () => {
+const toggleRepeatPasswordVisibility = (): void => {
   isRepeatPasswordVisible.value = !isRepeatPasswordVisible.value
 }
-const togglePasswordVisibility = () => {
+const togglePasswordVisibility = (): void => {
   isPasswordVisible.value = !isPasswordVisible.value
 }
 </script>
