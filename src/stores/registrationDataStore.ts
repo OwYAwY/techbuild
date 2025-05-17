@@ -37,6 +37,7 @@ export const registrationDataStore = defineStore('registration', {
     isAuthenticated: false,
   }),
   actions: {
+    // метод записи выявленных ошибок в store
     validate(): void {
       const fields: FieldKey[] = ['login', 'email', 'phone', 'password', 'repeatPassword']
 
@@ -100,6 +101,7 @@ export const registrationDataStore = defineStore('registration', {
       return ''
     },
 
+    // метод записи данных пользователя в localStorage
     confirm(): void {
       this.validate()
       const hasErrors = Object.values(this.errors).some((error) => error !== '')
@@ -121,6 +123,7 @@ export const registrationDataStore = defineStore('registration', {
       }
     },
 
+    // метод выгрузки данных пользователя из localStorage
     loadFromLocalStorage(): void {
       const savedData = localStorage.getItem('registeredUser')
       if (savedData) {

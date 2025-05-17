@@ -26,11 +26,3 @@ Vue 3 registration form template with Vite. Includes form validation, state mana
 
 - [VS Code](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar)
 - ESLint + Prettier plugins
-
-## 📝 Configuration
-
-See [Vite Config](https://vitejs.dev/config/)
-
-## 📜 License
-
-MIT
