@@ -112,7 +112,11 @@ export const registrationDataStore = defineStore('registration', {
           password: this.password,
           isAuthenticated: true,
         }
-        localStorage.setItem('registeredUser', JSON.stringify(userData))
+        try {
+          localStorage.setItem('registeredUser', JSON.stringify(userData))
+        } catch (e) {
+          console.error('LocalStorage error:', e)
+        }
         this.isAuthenticated = true
       }
     },

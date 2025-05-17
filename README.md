@@ -6,7 +6,8 @@ Vue 3 registration form template with Vite. Includes form validation, state mana
 
 ## 🚀 Quick Start
 
-1. Clone repo
+1. Clone repo:
+   `git clone https://github.com/OwYAwY/registration-page-test.git`
 2. Install deps:  
    `npm install`
 3. Run dev server:  
