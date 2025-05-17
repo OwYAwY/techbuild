@@ -1,13 +1,13 @@
 <script setup>
-import registrationPage from './pages/registrationPage.vue'
+import RegistrationPage from './pages/RegistrationPage.vue'
 import { registrationDataStore } from './stores/registrationDataStore'
-import welcomePage from './pages/welcomePage.vue'
+import WelcomePage from './pages/WelcomePage.vue'
 const store = registrationDataStore()
 </script>
 
 <template>
-  <registrationPage v-if="!store.isAuthenticated" />
-  <welcomePage v-else />
+  <RegistrationPage v-if="!store.isAuthenticated" />
+  <WelcomePage v-else />
 </template>
 
 <style></style>

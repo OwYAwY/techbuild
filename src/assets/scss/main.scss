@@ -21,14 +21,14 @@ body {
 .registration-container {
   background: white;
 
-  border-radius: 8px; // Добавим скругление углов
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); // Лёгкая тень для контейнера
-  padding: $padding-large * 1.5; // Увеличим отступы внутри формы
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  padding: $padding-large * 1.5;
 }
 .welcome-container {
   background: white;
   border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); // Лёгкая тень для контейнера
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   padding: $padding-large * 1.5;
 }
 
@@ -40,7 +40,7 @@ h1 {
   font-size: $font-size-x2;
   text-align: left;
   color: $color-text-label;
-  margin-bottom: $padding-large; // Добавим отступ снизу
+  margin-bottom: $padding-large;
   @include montserrat-bold;
 }
 
@@ -57,7 +57,7 @@ h1 {
   .clear-button {
     position: absolute;
     right: 4px;
-    top: 35%; // выше на 2%
+    top: 35%;
     transform: translateY(-50%);
     background: transparent;
     border: none;
@@ -74,8 +74,8 @@ h1 {
     }
 
     svg {
-      width: 30px; // было 20px
-      height: 30px; // стало чуть больше
+      width: 30px;
+      height: 30px;
       fill: $input-line-error;
       pointer-events: none;
     }
@@ -83,12 +83,12 @@ h1 {
 }
 
 .logout-text {
-  color: $color-black; // цвет как у ссылки
+  color: $color-black;
   cursor: pointer;
   @include montserrat-regular;
   text-decoration: underline;
   display: inline-block;
-  font-size: $font-size-small; // или нужный размер
+  font-size: $font-size-small;
   margin-top: $padding-large;
 
   &:hover,
@@ -119,7 +119,7 @@ h1 {
   }
   transition:
     border-color 0.3s ease,
-    color 0.3s ease; // Добавляем переход для цвета текста
+    color 0.3s ease;
 
   &.error-full {
     border-bottom-color: $input-line-error;
@@ -147,7 +147,7 @@ h1 {
   font-size: $font-size-large;
   cursor: pointer;
   transition: background 0.3s;
-  margin-top: $padding-large; // Добавим отступ сверху
+  margin-top: $padding-large;
   @include montserrat-light;
 
   &:hover {
@@ -174,7 +174,7 @@ h1 {
   position: relative;
 
   .input-style {
-    padding-right: 32px; /* Оставляем место для иконки */
+    padding-right: 32px;
     border: none;
     border-bottom: 1px solid $input-line-default;
     padding: 0.5rem 0;
@@ -196,7 +196,7 @@ h1 {
     }
     transition:
       border-color 0.3s ease,
-      color 0.3s ease; // Добавляем переход для цвета текста
+      color 0.3s ease;
 
     &.error-full {
       border-bottom-color: $input-line-error;
@@ -242,5 +242,96 @@ h1 {
     &--visible::before {
       background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23212121'%3E%3Cpath d='M12 7c2.76 0 5 2.24 5 5 0 .65-.13 1.26-.36 1.83l2.92 2.92c1.51-1.26 2.7-2.89 3.43-4.75-1.73-4.39-6-7.5-11-7.5-1.4 0-2.74.25-3.98.7l2.16 2.16C10.74 7.13 11.35 7 12 7zM2 4.27l2.28 2.28.46.46C3.08 8.3 1.78 10.02 1 12c1.73 4.39 6 7.5 11 7.5 1.55 0 3.03-.3 4.38-.84l.42.42L19.73 22 21 20.73 3.27 3 2 4.27zM7.53 9.8l1.55 1.55c-.05.21-.08.43-.08.65 0 1.66 1.34 3 3 3 .22 0 .44-.03.65-.08l1.55 1.55c-.67.33-1.41.53-2.2.53-2.76 0-5-2.24-5-5 0-.79.2-1.53.53-2.2zm4.31-.78l3.15 3.15.02-.16c0-1.66-1.34-3-3-3l-.17.01z'/%3E%3C/svg%3E");
     }
+  }
+}
+// под мобильные версии
+@media (max-width: 768px) {
+  body {
+    padding: $padding-medium;
+    align-items: flex-start;
+    background: white;
+  }
+
+  #app {
+    padding: 0;
+    max-width: 100%;
+  }
+
+  .registration-container,
+  .welcome-container {
+    padding: $padding-medium;
+    box-shadow: none;
+    border-radius: 0;
+    width: 100%;
+  }
+
+  h1 {
+    font-size: $font-size-large;
+    margin-bottom: $padding-medium;
+  }
+
+  .input-field {
+    margin-bottom: $padding-medium;
+
+    label {
+      font-size: $font-size-small;
+      margin-bottom: $padding-small / 2;
+    }
+  }
+
+  .input-style {
+    font-size: $font-size-small;
+    padding: 0.4rem 0;
+  }
+
+  .register-button {
+    padding: $padding-small $padding-medium;
+    font-size: $font-size-medium;
+    margin-top: $padding-medium;
+  }
+
+  .info-text {
+    font-size: $font-size-xsmall;
+  }
+
+  .password-toggle {
+    right: 4px !important;
+    width: 20px !important;
+    height: 20px !important;
+  }
+
+  .clear-button {
+    right: 2px !important;
+
+    svg {
+      width: 24px !important;
+      height: 24px !important;
+    }
+  }
+
+  .logout-text {
+    font-size: $font-size-xxsmall;
+    margin-top: $padding-medium;
+  }
+}
+
+// для маленьких экранов
+@media (max-width: 320px) {
+  .registration-container,
+  .welcome-container {
+    padding: $padding-small;
+  }
+
+  h1 {
+    font-size: $font-size-medium;
+  }
+
+  .input-field label {
+    font-size: $font-size-xsmall;
+  }
+
+  .register-button {
+    font-size: $font-size-small;
+    padding: $padding-small $padding-medium / 2;
   }
 }

@@ -1,7 +1,7 @@
 <script setup>
-import registrationWindow from '@/components/registrationWindow.vue'
+import RegistrationWindow from '@/components/RegistrationWindow.vue'
 </script>
 
 <template>
-  <registrationWindow />
+  <RegistrationWindow />
 </template>

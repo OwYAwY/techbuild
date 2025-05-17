@@ -9,12 +9,16 @@ $color-border: #dddddd;
 $color-divider: #eeeeee;
 $color-bg: #ffffff;
 
-$input-line-height: 1px; // Толщина полоски
-$input-line-default: #dddddd; // Светло-серая линия по умолчанию
-$input-line-active: #000000; // Чёрная линия при фокусе
-$input-text-color: #333333; // Цвет текста
+//цвета полоски input
+$input-line-height: 1px;
+$input-line-default: #dddddd;
+$input-line-active: #000000;
+$input-text-color: #333333;
 $input-line-error: #ff0000;
 
+//размеры шрифта
+$font-size-xxsmall: 10px;
+$font-size-xsmall: 12px;
 $font-size-base: 1rem;
 $font-size-small: 0.8rem;
 $font-size-medium: 1rem;
@@ -39,7 +43,7 @@ $input-border: 1px solid $color-border;
 $input-radius: 4px;
 $input-padding: 0.8rem;
 
-// Миксин для легкого начертания Montserrat
+// Миксины для легкого начертания Montserrat
 @mixin montserrat-light {
   font-family: 'Montserrat', sans-serif;
   font-optical-sizing: auto;
@@ -47,7 +51,6 @@ $input-padding: 0.8rem;
   font-style: normal;
 }
 
-// Дополнительные варианты при необходимости
 @mixin montserrat-regular {
   font-family: 'Montserrat', sans-serif;
   font-optical-sizing: auto;
