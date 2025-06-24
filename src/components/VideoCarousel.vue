@@ -18,19 +18,21 @@ function prev() {
 
 <template>
   <section
-    class="relative w-full h-[900px] bg-black flex items-center justify-center overflow-hidden"
+    class="relative w-full h-[590px] bg-black flex items-center justify-center overflow-hidden"
   >
-    <transition :name="direction">
-      <video
-        :key="currentIndex"
-        :src="videos[currentIndex]"
-        autoplay
-        muted
-        loop
-        playsinline
-        class="w-full h-full object-cover absolute inset-0"
-      ></video>
-    </transition>
+    <div class="relative w-full h-full overflow-hidden">
+      <transition :name="direction">
+        <video
+          :key="currentIndex"
+          :src="videos[currentIndex]"
+          autoplay
+          muted
+          loop
+          playsinline
+          class="absolute inset-0 w-full h-full object-cover"
+        ></video>
+      </transition>
+    </div>
 
     <button
       @click="prev"
@@ -50,24 +52,25 @@ function prev() {
 </template>
 
 <style scoped>
-.next-enter-from {
-  transform: translateX(100%);
+.next-enter-from,
+.next-leave-to,
+.prev-enter-from,
+.prev-leave-to {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
+}
+
+.next-enter-from {
+  transform: translateX(100%);
 }
 .next-enter-to {
   transform: translateX(0);
 }
 .next-leave-from {
   transform: translateX(0);
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
 }
 .next-leave-to {
   transform: translateX(-100%);
@@ -75,22 +78,12 @@ function prev() {
 
 .prev-enter-from {
   transform: translateX(-100%);
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
 }
 .prev-enter-to {
   transform: translateX(0);
 }
 .prev-leave-from {
   transform: translateX(0);
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
 }
 .prev-leave-to {
   transform: translateX(100%);
