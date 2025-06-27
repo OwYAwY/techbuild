@@ -1,5 +1,7 @@
-<script lang="ts" setup>
+<script lang="js" setup>
 import { ref } from 'vue'
+import { useBasketStore } from '@/stores/basketStore'
+const basketStore = useBasketStore()
 </script>
 <template>
   <header
@@ -34,7 +36,7 @@ import { ref } from 'vue'
           <li>
             <a
               href="#about"
-              class="text-white text-xl drop-shadow-md hover:text-purple-400 transition"
+              class="text-purple-300 text-xl drop-shadow-md hover:text-purple-500 transition"
             >
               О нас
             </a>
@@ -42,7 +44,7 @@ import { ref } from 'vue'
           <li>
             <a
               href="#services"
-              class="text-white text-xl drop-shadow-md hover:text-purple-400 transition"
+              class="text-purple-300 text-xl drop-shadow-md hover:text-purple-500 transition"
             >
               Услуги
             </a>
@@ -50,10 +52,28 @@ import { ref } from 'vue'
           <li>
             <a
               href="#contact"
-              class="text-white text-xl drop-shadow-md hover:text-purple-400 transition"
+              class="text-purple-300 text-xl drop-shadow-md hover:text-purple-500 transition"
             >
               Контакты
             </a>
+          </li>
+          <li @click="basketStore.toggleBasket" class="relative cursor-pointer">
+            <button
+              class="text-xl font-semibold transition cursor-pointer"
+              :class="
+                basketStore.isBasketOpen
+                  ? 'text-purple-400 underline'
+                  : 'text-purple-300 hover:text-purple-500'
+              "
+            >
+              Корзина
+            </button>
+
+            <!-- Маленький индикатор (например, кружок) -->
+            <span
+              v-if="basketStore.isBasketOpen"
+              class="absolute -top-1 -right-3 bg-purple-500 w-2.5 h-2.5 rounded-full animate-ping"
+            ></span>
           </li>
         </ul>
       </nav>

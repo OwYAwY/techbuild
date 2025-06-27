@@ -5,19 +5,16 @@ import App from './App.vue'
 import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
 
-// import { createPinia } from 'pinia'
+import { createPinia } from 'pinia'
 // import router from './router'
 // import VueTheMask from 'vue-the-mask'
-// import { registrationDataStore } from './stores/uselessStore'
-
 const app = createApp(App)
-// const pinia = createPinia()
+const pinia = createPinia()
 
 // app.use(VueTheMask)
-// app.use(pinia)
+app.use(pinia)
 // app.use(router)
 
-// const store = registrationDataStore()
 // store.loadFromLocalStorage()
 
 app.mount('#app')

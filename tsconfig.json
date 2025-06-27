@@ -20,7 +20,9 @@
     "src/**/*.tsx",
     "src/**/*.vue",
     "src/router/index.js",
-    "src/stores/**/*.ts"
+    "src/stores/**/*.ts",
+    "src/stores/basketStore.js",
+    "src/main.ts"
   ],
   "exclude": ["node_modules"]
 }
